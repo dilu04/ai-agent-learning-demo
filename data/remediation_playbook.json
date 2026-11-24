@@ -1,0 +1,66 @@
+[
+  {
+    "eventTypeCode": "AWS_EC2_INSTANCE_RETIREMENT_SCHEDULED",
+    "summary": "Underlying hardware is failing; the instance will be stopped on the retirement date.",
+    "steps": [
+      "Confirm whether each instance is EBS-backed (data survives a stop/start) or uses instance store (data is lost).",
+      "Check whether the instance is behind a load balancer or Auto Scaling group; if so, replace it through the group instead.",
+      "For redundant production instances, stop and start them one at a time in a quiet period, checking health between each.",
+      "For single instances, schedule a short maintenance window before the retirement date.",
+      "Verify the application after restart; note that the public IP changes unless an Elastic IP is attached."
+    ],
+    "urgencyRule": "Act before the retirement date. Production instances: at least several days before.",
+    "typicalOwner": "Team that owns the instance"
+  },
+  {
+    "eventTypeCode": "AWS_RDS_MAINTENANCE_SCHEDULED",
+    "summary": "A required update will be applied to the database during the maintenance window.",
+    "steps": [
+      "Check whether the database is Multi-AZ. Single-AZ means several minutes of downtime; Multi-AZ means about 60-120 seconds of failover.",
+      "Take a manual snapshot before the window.",
+      "Tell dependent application teams and support about the expected downtime.",
+      "Consider applying the update earlier at a quieter time, or upgrading to Multi-AZ afterwards.",
+      "Make sure applications reconnect automatically after the restart."
+    ],
+    "urgencyRule": "Prepare before the window. A single-AZ production database deserves extra attention.",
+    "typicalOwner": "Application team that owns the database"
+  },
+  {
+    "eventTypeCode": "AWS_LAMBDA_OPERATIONAL_ISSUE",
+    "summary": "An AWS-side problem is causing Lambda errors or latency in a region. Customers cannot fix the root cause.",
+    "steps": [
+      "Confirm impact in your own metrics (Lambda errors and throttles, downstream queue depth).",
+      "Make sure callers retry with exponential backoff and that failed events go to a dead-letter queue.",
+      "If you run multi-region, consider failing traffic over to a healthy region.",
+      "Tell stakeholders that the cause is on the AWS side and watch the Health dashboard for updates.",
+      "After recovery, replay any failed or dead-lettered events."
+    ],
+    "urgencyRule": "Immediate monitoring while the event is open. Customers can only mitigate, not fix.",
+    "typicalOwner": "Team that owns the affected function"
+  },
+  {
+    "eventTypeCode": "AWS_RISK_CREDENTIALS_EXPOSED",
+    "summary": "An IAM access key has been exposed publicly and may be abused.",
+    "steps": [
+      "Immediately deactivate the exposed key, then delete it. Do not wait to investigate first.",
+      "Search CloudTrail for activity by that key since the exposure time.",
+      "Check for unauthorized resources: new EC2 instances, IAM users or roles, access keys and unexpected regions.",
+      "Create a replacement key if needed and store it in Secrets Manager, not in code.",
+      "Remove the secret from the repository and its git history, then add secret scanning to prevent a repeat."
+    ],
+    "urgencyRule": "Treat as a security incident: act within the hour.",
+    "typicalOwner": "Owner of the IAM user, with the security team"
+  },
+  {
+    "eventTypeCode": "AWS_LAMBDA_RUNTIME_DEPRECATION_NOTIFICATION",
+    "summary": "A Lambda runtime version reaches end of support; functions keep running but get no security patches.",
+    "steps": [
+      "List all functions using the deprecated runtime.",
+      "Update the code and dependencies for a supported runtime and test in a non-production environment.",
+      "Deploy the updated functions gradually, starting with the least critical.",
+      "Add a check to catch deprecated runtimes earlier next time."
+    ],
+    "urgencyRule": "Plan before the deprecation date; low urgency for non-production.",
+    "typicalOwner": "Team that owns the function"
+  }
+]

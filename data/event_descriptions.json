@@ -1,0 +1,26 @@
+[
+  {
+    "eventArn": "arn:aws:health:us-east-1::event/EC2/AWS_EC2_INSTANCE_RETIREMENT_SCHEDULED/AWS_EC2_INSTANCE_RETIREMENT_SCHEDULED_1001",
+    "latestDescription": "EC2 has detected degradation of the underlying hardware hosting your Amazon EC2 instance in the us-east-1 region. Due to this degradation, your instance could already be unreachable. After 2026-11-20 00:00 UTC your instance will be retired and stopped. You can stop and start the instance yourself before the retirement date to move it to healthy hardware. Instances backed by EBS keep their data when stopped; instance store data is lost."
+  },
+  {
+    "eventArn": "arn:aws:health:eu-west-1::event/RDS/AWS_RDS_MAINTENANCE_SCHEDULED/AWS_RDS_MAINTENANCE_SCHEDULED_1002",
+    "latestDescription": "Amazon RDS will apply a required operating system update to your DB instance during the maintenance window on 2026-11-14 between 02:00 and 04:00 UTC. Single-AZ DB instances will be unavailable for several minutes while the update is applied. Multi-AZ deployments fail over to the standby, usually with 60-120 seconds of unavailability. You can apply the update earlier, at a time that suits you, from the RDS console."
+  },
+  {
+    "eventArn": "arn:aws:health:us-east-1::event/LAMBDA/AWS_LAMBDA_OPERATIONAL_ISSUE/AWS_LAMBDA_OPERATIONAL_ISSUE_1003",
+    "latestDescription": "We are investigating increased invoke error rates and latencies for AWS Lambda in the us-east-1 region. Some function invocations may fail or be delayed, including invocations triggered by API Gateway, SQS and EventBridge. Engineers are working to identify the root cause. We will provide another update within 60 minutes. If your workload is affected, retry failed invocations with backoff and consider failing over to another region if you have a multi-region setup."
+  },
+  {
+    "eventArn": "arn:aws:health:global::event/IAM/AWS_RISK_CREDENTIALS_EXPOSED/AWS_RISK_CREDENTIALS_EXPOSED_1004",
+    "latestDescription": "Your AWS Access Key ID AKIAEXAMPLE0000000001, belonging to IAM user web-deploy-user, along with the corresponding secret key, is publicly available on a code repository. This key may be used by unauthorized parties. To protect your account AWS may have applied a quarantine policy (AWSCompromisedKeyQuarantineV3) to the IAM user. Review the recent activity of this key in CloudTrail, delete or rotate the key, and check your account for unauthorized resources."
+  },
+  {
+    "eventArn": "arn:aws:health:us-west-2::event/LAMBDA/AWS_LAMBDA_RUNTIME_DEPRECATION_NOTIFICATION/AWS_LAMBDA_RUNTIME_DEPRECATION_NOTIFICATION_1005",
+    "latestDescription": "The Python 3.9 runtime for AWS Lambda reaches end of support on 2027-01-31. After that date you can no longer create new functions with this runtime, and security patches will stop. Existing functions continue to run, but you should migrate them to a supported runtime such as Python 3.12 or later. Test your code with the new runtime before updating production functions."
+  },
+  {
+    "eventArn": "arn:aws:health:eu-west-1::event/ELASTICLOADBALANCING/AWS_ELASTICLOADBALANCING_OPERATIONAL_ISSUE/AWS_ELASTICLOADBALANCING_OPERATIONAL_ISSUE_1006",
+    "latestDescription": "Between 13:05 and 16:40 UTC we experienced elevated connection errors for Application Load Balancers in the eu-west-1 region. The issue has been resolved and the service is operating normally. No customer action is required."
+  }
+]

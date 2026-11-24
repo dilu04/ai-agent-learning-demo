@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cloud Ops Agent</title>
+<style>
+  :root { --bg:#f5f7fa; --card:#fff; --text:#1f2933; --muted:#5f6c7b; --line:#cbd2d9; --accent:#ff9900; --dark:#232f3e; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#12171d; --card:#1b232c; --text:#e6ebf0; --muted:#9aa7b4; --line:#33404d; --dark:#0d1319; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:16px/1.5 "Segoe UI", Arial, sans-serif; }
+  header { background:var(--dark); color:#fff; padding:1rem 1.25rem; border-bottom:4px solid var(--accent); }
+  header h1 { margin:0; font-size:1.25rem; }
+  header p { margin:.2rem 0 0; color:#b8c2cc; font-size:.9rem; }
+  main { max-width:900px; margin:0 auto; padding:1.25rem 16px 3rem; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:1rem; margin-bottom:1rem; }
+  textarea { width:100%; min-height:90px; padding:.6rem; font:inherit; color:var(--text); background:var(--bg);
+             border:1px solid var(--line); border-radius:6px; resize:vertical; }
+  .row { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.75rem; }
+  button { font:inherit; padding:.55rem 1rem; border-radius:6px; border:1px solid var(--line);
+           background:var(--card); color:var(--text); cursor:pointer; }
+  button.primary { background:var(--accent); border-color:var(--accent); color:#1a1200; font-weight:600; }
+  button:disabled { opacity:.5; cursor:wait; }
+  .chips { display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.6rem; }
+  .chips button { font-size:.85rem; padding:.3rem .7rem; border-radius:999px; color:var(--muted); }
+  #status { color:var(--muted); margin:.5rem 0; min-height:1.5em; }
+  #calls { font:.85rem ui-monospace, Consolas, monospace; color:var(--muted); margin:0 0 .75rem; padding-left:1.1rem; }
+  #result table { border-collapse:collapse; width:100%; margin:1rem 0; display:block; overflow-x:auto; }
+  #result th, #result td { border:1px solid var(--line); padding:.45rem .65rem; text-align:left; vertical-align:top; }
+  #result th { background:var(--dark); color:#fff; }
+  #result h1, #result h2, #result h3 { margin-top:1.4rem; }
+  .error { color:#c0392b; font-weight:600; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Cloud Operations Agent</h1>
+  <p>AWS Health analysis · sample data · runs on this computer only</p>
+</header>
+<main>
+  <div class="card">
+    <label for="q"><strong>Ask a question</strong></label>
+    <textarea id="q" placeholder="e.g. What is affecting production right now?"></textarea>
+    <div class="chips" id="chips"></div>
+    <div class="row">
+      <button class="primary" id="ask">Ask the agent</button>
+      <button id="report">Generate management report</button>
+    </div>
+  </div>
+
+  <div id="status" role="status"></div>
+  <ul id="calls"></ul>
+  <div class="card" id="result" hidden></div>
+</main>
+
+<script>
+const examples = [
+  "What is affecting production right now?",
+  "Which events affect the dev sandbox account?",
+  "Do any upcoming events cause database downtime? Who owns them?",
+  "Review all open and upcoming events and tell me what needs attention, in priority order."
+];
+const $ = id => document.getElementById(id);
+const buttons = [$("ask"), $("report")];
+
+examples.forEach(text => {
+  const b = document.createElement("button");
+  b.textContent = text.length > 45 ? text.slice(0, 42) + "…" : text;
+  b.title = text;
+  b.onclick = () => { $("q").value = text; $("q").focus(); };
+  $("chips").appendChild(b);
+});
+
+async function call(url, body, working) {
+  buttons.forEach(b => b.disabled = true);
+  $("result").hidden = true;
+  $("calls").innerHTML = "";
+  $("status").textContent = working + " This can take a minute…";
+  try {
+    const res = await fetch(url, { method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body) });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || res.statusText);
+    $("calls").innerHTML = (data.calls || []).map(c => `<li>${c}</li>`).join("");
+    $("result").innerHTML = data.html;
+    $("result").hidden = false;
+    $("status").textContent = data.saved ? "Done. Saved to " + data.saved : "Done.";
+  } catch (err) {
+    $("status").innerHTML = "";
+    const p = document.createElement("span");
+    p.className = "error";
+    p.textContent = "Something went wrong: " + err.message;
+    $("status").appendChild(p);
+  } finally {
+    buttons.forEach(b => b.disabled = false);
+  }
+}
+
+$("ask").onclick = () => {
+  const question = $("q").value.trim();
+  if (!question) { $("status").textContent = "Please type a question first."; return; }
+  call("/api/ask", { question }, "The agent is investigating.");
+};
+$("report").onclick = () => call("/api/report", {}, "Writing the report.");
+$("q").addEventListener("keydown", e => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) $("ask").click(); });
+</script>
+</body>
+</html>

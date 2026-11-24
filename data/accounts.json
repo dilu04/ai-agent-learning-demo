@@ -1,0 +1,38 @@
+[
+  {
+    "accountId": "111111111111",
+    "name": "acme-prod-payments",
+    "environment": "production",
+    "ownerTeam": "Payments Platform",
+    "ownerEmail": "payments-platform@example.com",
+    "criticality": "high",
+    "businessFunction": "Customer card payments and checkout"
+  },
+  {
+    "accountId": "222222222222",
+    "name": "acme-prod-web",
+    "environment": "production",
+    "ownerTeam": "Web Engineering",
+    "ownerEmail": "web-eng@example.com",
+    "criticality": "high",
+    "businessFunction": "Public website and customer portal"
+  },
+  {
+    "accountId": "333333333333",
+    "name": "acme-dev-sandbox",
+    "environment": "development",
+    "ownerTeam": "Data Science",
+    "ownerEmail": "data-science@example.com",
+    "criticality": "low",
+    "businessFunction": "Experiments and prototypes"
+  },
+  {
+    "accountId": "444444444444",
+    "name": "acme-shared-services",
+    "environment": "shared",
+    "ownerTeam": "Cloud Platform",
+    "ownerEmail": "cloud-platform@example.com",
+    "criticality": "medium",
+    "businessFunction": "CI/CD, logging and internal tooling"
+  }
+]

@@ -1,0 +1,3 @@
+anthropic[aws]==2.7.0
+python-dotenv==1.2.4
+markdown==3.11.3

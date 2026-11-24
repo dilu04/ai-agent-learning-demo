@@ -1,0 +1,92 @@
+[
+  {
+    "eventArn": "arn:aws:health:us-east-1::event/EC2/AWS_EC2_INSTANCE_RETIREMENT_SCHEDULED/AWS_EC2_INSTANCE_RETIREMENT_SCHEDULED_1001",
+    "awsAccountId": "111111111111",
+    "entityValue": "i-0a1b2c3d4e5f60001",
+    "entityUrl": "https://console.aws.amazon.com/ec2/home?region=us-east-1#Instances:instanceId=i-0a1b2c3d4e5f60001",
+    "statusCode": "PENDING",
+    "lastUpdatedTime": "2026-11-05T09:12:00Z",
+    "tags": { "Name": "payments-api-1", "Role": "api-server" }
+  },
+  {
+    "eventArn": "arn:aws:health:us-east-1::event/EC2/AWS_EC2_INSTANCE_RETIREMENT_SCHEDULED/AWS_EC2_INSTANCE_RETIREMENT_SCHEDULED_1001",
+    "awsAccountId": "111111111111",
+    "entityValue": "i-0a1b2c3d4e5f60002",
+    "entityUrl": "https://console.aws.amazon.com/ec2/home?region=us-east-1#Instances:instanceId=i-0a1b2c3d4e5f60002",
+    "statusCode": "PENDING",
+    "lastUpdatedTime": "2026-11-05T09:12:00Z",
+    "tags": { "Name": "payments-api-2", "Role": "api-server" }
+  },
+  {
+    "eventArn": "arn:aws:health:us-east-1::event/EC2/AWS_EC2_INSTANCE_RETIREMENT_SCHEDULED/AWS_EC2_INSTANCE_RETIREMENT_SCHEDULED_1001",
+    "awsAccountId": "333333333333",
+    "entityValue": "i-0a1b2c3d4e5f60003",
+    "entityUrl": "https://console.aws.amazon.com/ec2/home?region=us-east-1#Instances:instanceId=i-0a1b2c3d4e5f60003",
+    "statusCode": "PENDING",
+    "lastUpdatedTime": "2026-11-05T09:12:00Z",
+    "tags": { "Name": "ds-notebook-host", "Role": "experiment" }
+  },
+  {
+    "eventArn": "arn:aws:health:eu-west-1::event/RDS/AWS_RDS_MAINTENANCE_SCHEDULED/AWS_RDS_MAINTENANCE_SCHEDULED_1002",
+    "awsAccountId": "222222222222",
+    "entityValue": "web-portal-db-primary",
+    "entityUrl": "https://console.aws.amazon.com/rds/home?region=eu-west-1#database:id=web-portal-db-primary",
+    "statusCode": "PENDING",
+    "lastUpdatedTime": "2026-11-08T14:30:00Z",
+    "tags": { "Name": "web-portal-db-primary", "Engine": "postgres", "MultiAZ": "false" }
+  },
+  {
+    "eventArn": "arn:aws:health:us-east-1::event/LAMBDA/AWS_LAMBDA_OPERATIONAL_ISSUE/AWS_LAMBDA_OPERATIONAL_ISSUE_1003",
+    "awsAccountId": "111111111111",
+    "entityValue": "payment-webhook-handler",
+    "entityUrl": "https://console.aws.amazon.com/lambda/home?region=us-east-1#/functions/payment-webhook-handler",
+    "statusCode": "IMPAIRED",
+    "lastUpdatedTime": "2026-11-10T08:20:00Z",
+    "tags": { "Name": "payment-webhook-handler", "Role": "webhook" }
+  },
+  {
+    "eventArn": "arn:aws:health:us-east-1::event/LAMBDA/AWS_LAMBDA_OPERATIONAL_ISSUE/AWS_LAMBDA_OPERATIONAL_ISSUE_1003",
+    "awsAccountId": "444444444444",
+    "entityValue": "ci-artifact-notifier",
+    "entityUrl": "https://console.aws.amazon.com/lambda/home?region=us-east-1#/functions/ci-artifact-notifier",
+    "statusCode": "IMPAIRED",
+    "lastUpdatedTime": "2026-11-10T08:20:00Z",
+    "tags": { "Name": "ci-artifact-notifier", "Role": "ci" }
+  },
+  {
+    "eventArn": "arn:aws:health:global::event/IAM/AWS_RISK_CREDENTIALS_EXPOSED/AWS_RISK_CREDENTIALS_EXPOSED_1004",
+    "awsAccountId": "222222222222",
+    "entityValue": "AKIAEXAMPLE0000000001",
+    "entityUrl": "https://console.aws.amazon.com/iam/home#/users/web-deploy-user",
+    "statusCode": "UNIMPAIRED",
+    "lastUpdatedTime": "2026-11-10T03:10:00Z",
+    "tags": { "IamUser": "web-deploy-user", "ExposedAt": "public code repository" }
+  },
+  {
+    "eventArn": "arn:aws:health:us-west-2::event/LAMBDA/AWS_LAMBDA_RUNTIME_DEPRECATION_NOTIFICATION/AWS_LAMBDA_RUNTIME_DEPRECATION_NOTIFICATION_1005",
+    "awsAccountId": "333333333333",
+    "entityValue": "ds-data-cleaner",
+    "entityUrl": "https://console.aws.amazon.com/lambda/home?region=us-west-2#/functions/ds-data-cleaner",
+    "statusCode": "PENDING",
+    "lastUpdatedTime": "2026-10-28T11:00:00Z",
+    "tags": { "Name": "ds-data-cleaner", "Runtime": "python3.9" }
+  },
+  {
+    "eventArn": "arn:aws:health:us-west-2::event/LAMBDA/AWS_LAMBDA_RUNTIME_DEPRECATION_NOTIFICATION/AWS_LAMBDA_RUNTIME_DEPRECATION_NOTIFICATION_1005",
+    "awsAccountId": "333333333333",
+    "entityValue": "ds-report-exporter",
+    "entityUrl": "https://console.aws.amazon.com/lambda/home?region=us-west-2#/functions/ds-report-exporter",
+    "statusCode": "PENDING",
+    "lastUpdatedTime": "2026-10-28T11:00:00Z",
+    "tags": { "Name": "ds-report-exporter", "Runtime": "python3.9" }
+  },
+  {
+    "eventArn": "arn:aws:health:eu-west-1::event/ELASTICLOADBALANCING/AWS_ELASTICLOADBALANCING_OPERATIONAL_ISSUE/AWS_ELASTICLOADBALANCING_OPERATIONAL_ISSUE_1006",
+    "awsAccountId": "222222222222",
+    "entityValue": "web-portal-alb",
+    "entityUrl": "https://console.aws.amazon.com/ec2/home?region=eu-west-1#LoadBalancers:search=web-portal-alb",
+    "statusCode": "RESOLVED",
+    "lastUpdatedTime": "2026-10-30T17:00:00Z",
+    "tags": { "Name": "web-portal-alb", "Role": "public-load-balancer" }
+  }
+]
